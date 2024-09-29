@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #click-count, #money {
+            font-size: 24px;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clicker Game</h1>
+    <div id="click-count">Кликов: 0</div>
+    <div id="money">Деньги: 0</div>
+    <button id="click-btn">👆 Клик!</button>
+
+    <script>
+        let clicks = 0;
+        let money = 0;
+
+        function updateUI() {
+            document.getElementById('click-count').innerText = `Кликов: ${clicks}`;
+            document.getElementById('money').innerText = `Деньги: ${money}`;
+        }
+
+        document.getElementById('click-btn').addEventListener('click', () => {
+            clicks += 1;
+            money += 1;
+            updateUI();
+            
+            // Отправка данных в бота через API Telegram
+            Telegram.WebApp.sendData(JSON.stringify({clicks: clicks, money: money}));
+        });
+
+        // Telegram WebApp API готово
+        Telegram.WebApp.ready();
+    </script>
+</body>
+</html>
